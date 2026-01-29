@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "react-phone-input-2/lib/style.css";
+
+
+
+body{
+font-family: 'Titillium Web', sans-serif;
+}
