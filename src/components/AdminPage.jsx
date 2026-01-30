@@ -65,7 +65,9 @@ function AdminPage() {
           "#9810fa", // yellow
           "#4a5565", // red
         ],
+        spacing: 10,
         borderWidth: 0,
+        
       },
     ],
   };
@@ -74,7 +76,7 @@ function AdminPage() {
     
     responsive: true,
   maintainAspectRatio: false,
-  cutout: "70%", // <--- controls the inner hole size
+  cutout: "75%", // <--- controls the inner hole size
 
     plugins: {
       legend: {
