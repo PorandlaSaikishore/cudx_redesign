@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSuitcase,
@@ -17,265 +15,177 @@ import {
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 function AdminPage() {
-  ChartJS.register(ArcElement, Tooltip, Legend);
   const navigate = useNavigate();
-  
 
   const data = [
-    {
-      id: 1,
-      name: "Adam Wright",
-      company: "Trellance",
-      role: "Executive Director",
-      status: "New",
-    },
-    {
-      id: 2,
-      name: "Keerthi",
-      company: "Trellance",
-      role: "Director",
-      status: "Meeting Set",
-    },
-    {
-      id: 3,
-      name: "Ganesh Kumar Morla",
-      company: "Trellance",
-      role: "CTO",
-      status: "Sent",
-    },
-    {
-      id: 4,
-      name: "John Deo",
-      company: "Tech Corp",
-      role: "CTO",
-      status: "Cold",
-    },
+    { id: 1, name: "Adam Wright", company: "Trellance", role: "Executive Director", status: "New" },
+    { id: 2, name: "Keerthi", company: "Trellance", role: "Director", status: "Meeting Set" },
+    { id: 3, name: "Ganesh Kumar Morla", company: "Trellance", role: "CTO", status: "Sent" },
+    { id: 4, name: "John Deo", company: "Tech Corp", role: "CTO", status: "Cold" },
   ];
 
-   const chartData = {
+  const chartData = {
     labels: ["New", "Meeting Set", "Emails Sent", "Cold"],
     datasets: [
       {
-        label: "Pipeline Distribution",
-        data: [1, 1, 1, 1], // example values
-        backgroundColor: [
-          "#155dfc", // blue
-          "#10B981", // green
-          "#9810fa", // yellow
-          "#4a5565", // red
-        ],
-        spacing: 10,
+        data: [1, 1, 1, 1],
+        backgroundColor: ["#155dfc", "#10B981", "#9810fa", "#4a5565"],
         borderWidth: 0,
-        
+        spacing: 8,
       },
     ],
   };
 
   const options = {
-    
     responsive: true,
-  maintainAspectRatio: false,
-  cutout: "75%", // <--- controls the inner hole size
-
+    maintainAspectRatio: false,
+    cutout: "75%",
     plugins: {
-      legend: {
-        position: "bottom",
-        labels: {
-          font: {
-            size: 14,
-          },
-        },
-      },
-      tooltip: {
-        enabled: true,
-      },
+      legend: { position: "bottom" },
     },
   };
 
-
-
-
   return (
-    <>
-      <div className="flex h-screen bg-gray-100">
-        {/* Sidebar */}
-        <aside className="w-64 bg-white text-black border-r border-r-gray-200">
-          <div className="p-4">
-            <div className="flex justify-center items-center gap-2">
-              <div className="bg-blue-600 text-white p-2 rounded-xl">
-                <FontAwesomeIcon icon={faSuitcase} className="text-2xl" />
-              </div>
-              <div>
-                <div className="font-semibold text-xl">LeadFlow</div>
-                <div className="text-gray-600 text-sm">Agent Workspace</div>
-              </div>
+    <div className="flex min-h-screen bg-gray-100">
+      {/* SIDEBAR */}
+      <aside className="hidden md:flex md:w-64 bg-white border-r border-gray-200 flex-col">
+        {/* Logo */}
+        <div className="p-4">
+          <div className="flex items-center gap-3 justify-center">
+            <div className="bg-blue-600 text-white p-2 rounded-xl">
+              <FontAwesomeIcon icon={faSuitcase} className="text-xl" />
             </div>
-          </div>
-          <hr className="text-gray-200 py-4" />
-
-          <div className="p-4 h-[70%]">
-            <div className="flex justify-center items-center gap-2 bg-blue-100 text-blue-600 p-2 rounded-xl my-2">
-              <div>
-                <FontAwesomeIcon icon={faGrip} />
-              </div>
-              <div>Dashboard</div>
-            </div>
-            <div className="flex justify-center items-center gap-2  text-gray-600 p-2 rounded-xl my-2">
-              <div>
-                <FontAwesomeIcon icon={faUserGroup} />
-              </div>
-              <div>Leads</div>
-            </div>
-            <div className="flex justify-center items-center gap-2  text-gray-600 p-2 rounded-xl my-2">
-              <div>
-                <FontAwesomeIcon icon={faFileLines} />
-              </div>
-              <div>Templates</div>
-            </div>
-          </div>
-          <div className="mt-auto p-4 border-t border-gray-200">
-            <div className="flex justify-center items-center gap-2">
-              <div>
-                {" "}
-                <FontAwesomeIcon
-                  icon={faCircleUser}
-                  className="text-2xl text-gray-600"
-                />
-              </div>
-              <div>
-                {" "}
-                <div className="font-semibold">Demo Agent</div>
-                <div className="text-gray-600 text-sm">agent@example.com</div>
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        {/* Main content */}
-        <main className="flex-1 overflow-y-auto p-10">
-          <div className="flex justify-center items-center gap-[60%]">
             <div>
-              <div className="text-4xl font-bold">Dashboard</div>
-              <div className="text-gray-600">
-                Overview of your pipeline performance
-              </div>
-            </div>
-            <div className="bg-blue-600 text-white flex justify-center items-center gap-7 py-2 px-4 rounded-xl font-semibold">
-              <div>+</div>
-              <div>Add Leads</div>
+              <div className="font-semibold text-lg">LeadFlow</div>
+              <div className="text-gray-500 text-sm">Agent Workspace</div>
             </div>
           </div>
-          <div className="mt-7">
-            <div className="flex justify-center items-center gap-7">
-              <div className="p-3 border border-gray-200 bg-white  rounded-xl hover:shadow">
-                <div className="flex justify-center items-center gap-7 p-4">
-                  <div>
-                    <div className="text-gray-600 font-semibold">
-                      Total Leads
-                    </div>
-                    <div className="font-bold text-2xl">4</div>
-                  </div>
-                  <div>
-                    <div className="bg-blue-100 text-blue-600 p-2 rounded-xl">
-                      <FontAwesomeIcon
-                        icon={faUserGroup}
-                        className="text-2xl"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="p-3 border border-gray-200 bg-white  rounded-xl hover:shadow">
-                <div className="flex justify-center items-center gap-7 p-4">
-                  <div>
-                    <div className="text-gray-600 font-semibold">
-                      Emails Sent
-                    </div>
-                    <div className="font-bold text-2xl">1</div>
-                  </div>
-                  <div>
-                    <div className="bg-purple-100 text-purple-600 p-2 rounded-xl">
-                      <FontAwesomeIcon
-                        icon={faPaperPlane}
-                        className="text-2xl"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="p-3 border border-gray-200 bg-white  rounded-xl hover:shadow">
-                <div className="flex justify-center items-center gap-7 p-4">
-                  <div>
-                    <div className="text-gray-600 font-semibold">
-                      Meetings Set
-                    </div>
-                    <div className="font-bold text-2xl">1</div>
-                  </div>
-                  <div>
-                    <div className="bg-green-100 text-green-600 p-2 rounded-xl">
-                      <FontAwesomeIcon icon={faCalendar} className="text-2xl" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="p-3 border border-gray-200 bg-white  rounded-xl hover:shadow">
-                <div className="flex justify-center items-center gap-7 p-4">
-                  <div>
-                    <div className="text-gray-600 font-semibold">
-                      Follow Ups
-                    </div>
-                    <div className="font-bold text-2xl">0</div>
-                  </div>
-                  <div>
-                    <div className="bg-orange-100 text-orange-600 p-2 rounded-xl">
-                      <FontAwesomeIcon icon={faClock} className="text-2xl" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+        </div>
+
+        <hr />
+
+        {/* Menu */}
+        <div className="p-4 space-y-2">
+          <div className="flex items-center gap-3 bg-blue-100 text-blue-600 p-2 rounded-xl justify-center">
+            <FontAwesomeIcon icon={faGrip} />
+            <span>Dashboard</span>
+          </div>
+
+          <div className="flex items-center gap-3 text-gray-600 p-2 rounded-xl justify-center">
+            <FontAwesomeIcon icon={faUserGroup} />
+            <span>Leads</span>
+          </div>
+
+          <div className="flex items-center gap-3 text-gray-600 p-2 rounded-xl justify-center">
+            <FontAwesomeIcon icon={faFileLines} />
+            <span>Templates</span>
+          </div>
+        </div>
+
+        {/* USER AT BOTTOM */}
+        <div className="mt-auto p-4 border-t">
+          <div className="flex items-center gap-3 justify-center">
+            <FontAwesomeIcon
+              icon={faCircleUser}
+              className="text-2xl text-gray-500"
+            />
+            <div>
+              <div className="font-semibold">Demo Agent</div>
+              <div className="text-sm text-gray-500">agent@example.com</div>
             </div>
           </div>
-          <div className="mt-7">
-            <div className="flex justify-center items-center gap-7">
-              <div className="p-3 border border-gray-200 bg-white shadow rounded-xl">
-                <div className="font-semibold text-xl py-2">Pipeline Distribution</div>
-                <div className="w-75 h-75 mx-auto bg-white p-4 rounded-lg shadow-md">
-  <Doughnut data={chartData} options={options} />
-</div>
+        </div>
+      </aside>
+
+      {/* MAIN CONTENT */}
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-10">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold">Dashboard</h1>
+            <p className="text-gray-600">
+              Overview of your pipeline performance
+            </p>
+          </div>
+
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-xl font-semibold w-fit">
+            + Add Leads
+          </button>
+        </div>
+
+        {/* STATS */}
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { label: "Total Leads", value: 4, icon: faUserGroup, color: "blue" },
+            { label: "Emails Sent", value: 1, icon: faPaperPlane, color: "purple" },
+            { label: "Meetings Set", value: 1, icon: faCalendar, color: "green" },
+            { label: "Follow Ups", value: 0, icon: faClock, color: "orange" },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-white border rounded-xl hover:shadow p-4 flex justify-between items-center"
+            >
+              <div>
+                <div className="text-gray-500 font-semibold">{item.label}</div>
+                <div className="text-2xl font-bold">{item.value}</div>
               </div>
-              <div className="p-5 border border-gray-200 bg-white shadow rounded-xl">
-                <div className="font-semibold text-xl py-2">Recent Leads</div>
-                <table className="min-w-full text-sm border-none">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-4 py-2 text-left">Name</th>
-                      <th className="px-4 py-2 text-left">Company</th>
-                      <th className="px-4 py-2 text-left">Role</th>
-                      <th className="px-4 py-2 text-left">Status</th>
+              <div
+                className={`bg-${item.color}-100 text-${item.color}-600 p-3 rounded-xl`}
+              >
+                <FontAwesomeIcon icon={item.icon} className="text-xl" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CHART + TABLE */}
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Chart */}
+          <div className="bg-white border rounded-xl shadow p-4">
+            <div className="font-semibold text-lg mb-2">
+              Pipeline Distribution
+            </div>
+            <div className="h-[260px] sm:h-[300px]">
+              <Doughnut data={chartData} options={options} />
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="bg-white border rounded-xl shadow p-4 lg:col-span-2">
+            <div className="font-semibold text-lg mb-2">Recent Leads</div>
+            <div className="overflow-x-auto">
+              <table className="min-w-[600px] text-sm">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-4 py-2 text-left">Name</th>
+                    <th className="px-4 py-2 text-left">Company</th>
+                    <th className="px-4 py-2 text-left">Role</th>
+                    <th className="px-4 py-2 text-left">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((row) => (
+                    <tr key={row.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-3 font-semibold">{row.name}</td>
+                      <td className="px-4 py-3 text-gray-600">{row.company}</td>
+                      <td className="px-4 py-3 text-gray-600">{row.role}</td>
+                      <td className="px-4 py-3">
+                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600">
+                          {row.status}
+                        </span>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((row) => (
-                      <tr key={row.id} className="hover:bg-gray-50">
-                        <td className="px-4 py-4 font-bold">{row.name}</td>
-                        <td className="px-4 py-4 text-gray-600">{row.company}</td>
-                        <td className="px-4 py-4 text-gray-600">{row.role}</td>
-                        {row.status.includes("New") && <td className="px-4 py-4"><div className="text-center text-blue-600 font-bold bg-blue-100 rounded-2xl px-4 py-1">{row.status}</div></td>}
-                        {row.status.includes("Meeting Set") && <td className="px-4 py-4"><div className="text-center text-green-600 font-bold bg-green-100 rounded-2xl px-4 py-1">{row.status}</div></td>}
-                        {row.status.includes("Sent") && <td className="px-4 py-4"><div className="text-center text-purple-600 font-bold bg-purple-100 rounded-2xl px-4 py-1">{row.status}</div></td>}
-                        {row.status.includes("Cold") && <td className="px-4 py-4"><div className="text-center text-gray-600 font-bold bg-gray-100 rounded-2xl px-4 py-1">{row.status}</div></td>}
-                        
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        </main>
-      </div>
-    </>
+        </div>
+      </main>
+    </div>
   );
 }
 
